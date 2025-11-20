@@ -14,7 +14,7 @@ CREATE TABLE Account (
     account_status VARCHAR(20) DEFAULT 'Active' CHECK (
         account_status IN ('Active', 'Inactive', 'Suspended')
     ),
-    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_username (username)
 );
 CREATE TABLE Dish (
@@ -37,7 +37,7 @@ CREATE TABLE Inventory (
     stock_status VARCHAR(20) DEFAULT 'In Stock' CHECK (
         stock_status IN ('In Stock', 'Low Stock', 'Out of Stock')
     ),
-    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE
+    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE `Order` (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -58,8 +58,8 @@ CREATE TABLE `Order` (
     ),
     payment_status VARCHAR(20) DEFAULT 'Unpaid' CHECK (payment_status IN ('Unpaid', 'Paid', 'Refunded')),
     isTakeout BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES Account(username) ON DELETE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES Account(username) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_order_time (order_time)
 );
 CREATE TABLE Employee (
@@ -76,18 +76,18 @@ CREATE TABLE Chef (
     specialty VARCHAR(100),
     salary DECIMAL(10, 2) CHECK (salary >= 0),
     leave_status VARCHAR(20) DEFAULT 'Active' CHECK (leave_status IN ('Active', 'On Leave')),
-    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE,
-    FOREIGN KEY (leave_status) REFERENCES Employee(leave_status) ON DELETE CASCADE,
-    FOREIGN KEY (salary) REFERENCES Employee(salary) ON DELETE CASCADE
+    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (leave_status) REFERENCES Employee(leave_status) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (salary) REFERENCES Employee(salary) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE Manager (
     manager_id INT PRIMARY KEY AUTO_INCREMENT,
     employee_id INT NOT NULL,
     salary DECIMAL(10, 2) CHECK (salary >= 0),
     leave_status VARCHAR(20) DEFAULT 'Active' CHECK (leave_status IN ('Active', 'On Leave')),
-    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE,
-    FOREIGN KEY (leave_status) REFERENCES Employee(leave_status) ON DELETE CASCADE,
-    FOREIGN KEY (salary) REFERENCES Employee(salary) ON DELETE CASCADE
+    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (leave_status) REFERENCES Employee(leave_status) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (salary) REFERENCES Employee(salary) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE Cook (
     cook_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -96,9 +96,9 @@ CREATE TABLE Cook (
     item_id INT NOT NULL,
     count INT NOT NULL CHECK (count > 0),
     method VARCHAR(100) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES `Order`(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES SupplyChain(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES `Order`(order_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES Dish(dish_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES SupplyChain(item_id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE KEY unique_cook_entry (order_id, dish_id, item_id)
 );
 CREATE TABLE SupplyChain (
@@ -115,7 +115,7 @@ CREATE TABLE SupplyRecord (
     supply_date DATE NOT NULL,
     supplier VARCHAR(100),
     cost DECIMAL(10, 2) CHECK (cost >= 0),
-    FOREIGN KEY (item_id) REFERENCES SupplyChain(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES SupplyChain(item_id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_supply_date (supply_date)
 );
 CREATE TABLE LeaveRecord (
@@ -124,7 +124,7 @@ CREATE TABLE LeaveRecord (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     reason TEXT,
-    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (employee_id) REFERENCES Employee(employee_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CHECK (end_date >= start_date),
     INDEX idx_leave_date (start_date, end_date)
 );
@@ -138,8 +138,8 @@ CREATE TABLE Feedback (
     ),
     comments TEXT,
     date DATE NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id) ON DELETE CASCADE,
-    FOREIGN KEY (order_id) REFERENCES `Order`(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES `Order`(order_id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_feedback_date (date)
 );
 CREATE TABLE DailyRevenue (

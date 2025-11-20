@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顾客信息管理系统</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .loading,
+        .error,
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .loading {
+            background-color: #e8f4fd;
+            color: #1976d2;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #f5c6cb;
+        }
+
+        .no-data {
+            background-color: #f9f9f9;
+            color: #666;
+        }
+
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .customer-table th {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .customer-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .customer-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .customer-table tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s;
+        }
+
+        .customer-id {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .refresh-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>顾客信息管理系统</h1>
+
+        <div id="loading" class="loading">
+            正在加载顾客数据，请稍候...
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <!-- 错误信息将由JavaScript动态填充 -->
+        </div>
+
+        <div id="no-data" class="no-data" style="display: none;">
+            当前没有顾客数据。
+        </div>
+
+        <div id="customer-list" style="display: none;">
+            <table class="customer-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>顾客ID</th>
+                    </tr>
+                </thead>
+                <tbody id="customer-table-body">
+                    <!-- 顾客数据将由JavaScript动态填充 -->
+                </tbody>
+            </table>
+
+            <button class="refresh-btn" onclick="loadCustomers()">刷新数据</button>
+
+            <div class="last-updated" id="last-updated">
+                <!-- 最后更新时间将由JavaScript动态填充 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后自动获取顾客数据
+        document.addEventListener('DOMContentLoaded', function () {
+            loadCustomers();
+        });
+
+        // 加载顾客数据的函数
+        function loadCustomers() {
+            // 显示加载状态，隐藏其他状态
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('no-data').style.display = 'none';
+            document.getElementById('customer-list').style.display = 'none';
+
+            // 发送请求到PHP后端
+            fetch('GuestLogin.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常，状态码: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 隐藏加载状态
+                    document.getElementById('loading').style.display = 'none';
+
+                    // 检查返回的数据类型
+                    if (Array.isArray(data)) {
+                        if (data.length > 0) {
+                            displayCustomers(data);
+                        } else {
+                            // 数据为空数组
+                            document.getElementById('no-data').style.display = 'block';
+                        }
+                    } else if (data && data.message) {
+                        // 返回的是消息对象（如"未找到顾客记录"）
+                        if (data.message === "未找到顾客记录") {
+                            document.getElementById('no-data').style.display = 'block';
+                        } else {
+                            throw new Error(data.message);
+                        }
+                    } else {
+                        throw new Error('返回的数据格式不正确');
+                    }
+                })
+                .catch(error => {
+                    // 隐藏加载状态，显示错误信息
+                    document.getElementById('loading').style.display = 'none';
+                    const errorElement = document.getElementById('error');
+                    errorElement.innerHTML = `<p>加载顾客数据时出错: ${error.message}</p>
+                                             <p>请检查网络连接后点击"刷新数据"按钮重试。</p>`;
+                    errorElement.style.display = 'block';
+                    console.error('错误详情:', error);
+                });
+        }
+
+        // 显示顾客数据的函数
+        function displayCustomers(customers) {
+            const tableBody = document.getElementById('customer-table-body');
+            tableBody.innerHTML = ''; // 清空现有内容
+
+            // 遍历顾客数据并添加到表格中
+            customers.forEach((customer, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="customer-id">${customer.id}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // 显示顾客列表
+            document.getElementById('customer-list').style.display = 'block';
+
+            // 更新最后刷新时间
+            const now = new Date();
+            document.getElementById('last-updated').textContent =
+                `最后更新时间: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+        }
+    </script>
+</body>
+
+</html>
