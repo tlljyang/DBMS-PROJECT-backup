@@ -4,11 +4,11 @@
 	font-weight: normal;
 	font-style: normal;
 	font-family: 'codropsicons';
-	src:url('../fonts/codropsicons/codropsicons.eot');
-	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
-		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
-		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+	src:url('http://alist.tlljyang.pp.ua:16600/DBMS-PROJECT-test/extra/main/fonts/codropsicons/codropsicons.eot');
+	src:url('http://alist.tlljyang.pp.ua:16600/DBMS-PROJECT-test/extra/main/fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
+		url('http://alist.tlljyang.pp.ua:16600/DBMS-PROJECT-test/extra/main/fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('http://alist.tlljyang.pp.ua:16600/DBMS-PROJECT-test/extra/main/fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('http://alist.tlljyang.pp.ua:16600/DBMS-PROJECT-test/extra/main/fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
 }
 
 *, *:after, *:before { box-sizing: border-box; }
