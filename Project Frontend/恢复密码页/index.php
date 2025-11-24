@@ -252,7 +252,7 @@ function sendMail($to, $subject, $message, $headers, $host, $port, $username, $p
 		}
 	</style>
 	<!-- 引入Roboto字体 -->
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+	<link href="https://fonts.loli.net/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
 		rel="stylesheet">
 </head>
 
