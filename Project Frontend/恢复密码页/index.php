@@ -294,7 +294,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="footer">
             <p><spam>Copyright &copy; 2025 </spam>
-                            <spam><a href="http://tlljyang.pp.ua" style="color: yellow;">SodaCANdy.Group</a></spam> in
+                            <spam><a href="http://tlljyang.pp.ua" style="color: red;">SodaCANdy.Group</a></spam> in
                             UIC. All rights reserved.</p>
         </div>
     </div>
