@@ -2,27 +2,28 @@
 <?php
 // 数据库连接和邮件发送功能
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
     $email = $_POST['email'];
     
     // 数据库连接信息
     $servername = "alist.tlljyang.pp.ua";
     $port = 16599;
-    $username = "projectUser";
-    $password = "pj1234";
+    $db_username = "projectUser";
+    $db_password = "pj1234";
     $dbname = "project";
     
     // 创建数据库连接
-    $conn = new mysqli($servername, $username, $password, $dbname, $port);
+    $conn = new mysqli($servername, $db_username, $db_password, $dbname, $port);
     
     // 检查连接
     if ($conn->connect_error) {
         die("数据库连接失败: " . $conn->connect_error);
     }
     
-    // 检查邮箱是否存在
-    $sql = "SELECT * FROM account WHERE email = ?";
+    // 检查用户名和邮箱是否匹配
+    $sql = "SELECT * FROM account WHERE username = ? AND email = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("ss", $username, $email);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -31,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $new_password = bin2hex(random_bytes(8)); // 16位随机密码
         
         // 更新数据库中的密码
-        $update_sql = "UPDATE account SET password = ? WHERE email = ?";
+        $update_sql = "UPDATE account SET password = ? WHERE username = ? AND email = ?";
         $update_stmt = $conn->prepare($update_sql);
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-        $update_stmt->bind_param("ss", $hashed_password, $email);
+        $update_stmt->bind_param("sss", $hashed_password, $username, $email);
         
         if ($update_stmt->execute()) {
             // 发送邮件
@@ -64,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $update_stmt->close();
     } else {
-        echo "<script>alert('邮箱地址错误或用户不存在！');</script>";
+        echo "<script>alert('用户名和邮箱不匹配或用户不存在！');</script>";
     }
     
     $stmt->close();
@@ -152,127 +153,141 @@ function sendMail($to, $subject, $message, $headers, $host, $port, $username, $p
 }
 ?>
 <html>
-
 <head>
-	<title>Reset Password</title>
-	<style>
-		/* 基本样式 */
-		body {
-			font-family: 'Roboto', sans-serif;
-			background: #f5f5f5;
-			margin: 0;
-			padding: 0;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			min-height: 100vh;
-			justify-content: center;
-		}
-
-		.elelment {
-			background: white;
-			padding: 30px;
-			border-radius: 10px;
-			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-			width: 100%;
-			max-width: 400px;
-			box-sizing: border-box;
-		}
-
-		.elelment h2 {
-			text-align: center;
-			color: #333;
-			margin-bottom: 20px;
-		}
-
-		.element-main {
-			text-align: center;
-		}
-
-		.element-main h1 {
-			color: #555;
-			font-size: 24px;
-			margin-bottom: 10px;
-		}
-
-		.element-main p {
-			color: #777;
-			margin-bottom: 20px;
-			line-height: 1.5;
-		}
-
-		form {
-			display: flex;
-			flex-direction: column;
-		}
-
-		input[type="text"] {
-			padding: 12px;
-			margin-bottom: 15px;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-			font-size: 16px;
-			transition: border 0.3s;
-		}
-
-		input[type="text"]:focus {
-			border-color: #4CAF50;
-			outline: none;
-		}
-
-		input[type="submit"] {
-			background: #4CAF50;
-			color: white;
-			border: none;
-			padding: 12px;
-			border-radius: 5px;
-			font-size: 16px;
-			cursor: pointer;
-			transition: background 0.3s;
-		}
-
-		input[type="submit"]:hover {
-			background: #45a049;
-		}
-
-		.copy-right {
-			margin-top: 20px;
-			text-align: center;
-			color: #777;
-			font-size: 14px;
-		}
-
-		.copy-right a {
-			color: #4CAF50;
-			text-decoration: none;
-		}
-
-		.copy-right a:hover {
-			text-decoration: underline;
-		}
-	</style>
-	<!-- 引入Roboto字体 -->
-	<link href="https://fonts.loli.net/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
-		rel="stylesheet">
+    <title>Reset Password</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        
+        .elelment {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        
+        .elelment h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .element-main {
+            text-align: center;
+        }
+        
+        .element-main h1 {
+            color: #555;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .element-main p {
+            color: #777;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        input[type="text"] {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        input[type="submit"] {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        input[type="submit"]:hover {
+            background: #45a049;
+        }
+        
+        .copy-right {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .copy-right a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .copy-right a:hover {
+            text-decoration: underline;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+    </style>
+    <!-- 引入Roboto字体 -->
+    <link href="https://fonts.loli.net/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
-	<div class="elelment">
-		<h2>Reset Password</h2>
-		<div class="element-main">
-			<h1>Forgot Password?</h1>
-			<p>Enter your e-mail address below to reset your password.</p>
-			<form method="post" action="">
-				<input type="text" name="email" placeholder="Your e-mail address" required>
-				<input type="submit" value="Reset my Password">
-			</form>
-		</div>
-	</div>
-	<div class="copy-right">
-		<p><span>Copyright &copy; 2025 </span>
-			<span><a href="https://tlljyang.github.io">SodaCANdy.Group</a></span> in UIC. All rights reserved.
-		</p>
-	</div>
+    <div class="elelment">
+        <h2>Reset Password</h2>
+        <div class="element-main">
+            <h1>Forgot Password?</h1>
+            <p>Enter your username and e-mail address below to reset your password.</p>
+            <form method="post" action="">
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" placeholder="Your e-mail address" required>
+                </div>
+                <input type="submit" value="Reset my Password">
+            </form>
+        </div>
+    </div>
+    <div class="copy-right">
+        <p><span>Copyright &copy; 2025 </span>
+        <span><a href="https://tlljyang.github.io">SodaCANdy.Group</a></span> in UIC. All rights reserved.</p>
+    </div>
 </body>
-
 </html>
