@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-// 引入PHPMailer类
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -8,37 +8,22 @@ use PHPMailer\PHPMailer\Exception;
 require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
-
-// 初始化变量
 $error_message = "";
 $success_message = "";
 
-// 数据库连接和邮件发送功能
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 检查是否已提交表单
     if(isset($_POST['username']) && isset($_POST['email'])) {
         $username = trim($_POST['username']);
         $email = trim($_POST['email']);
-        
-        // 验证输入
         if (empty($username) || empty($email)) {
-            $error_message = "请填写所有必填字段！";
+            $error_message = "Please enter your username and email address.";
         } else {
-            // 数据库连接信息
             $servername = "alist.tlljyang.pp.ua";
             $port = 16599;
             $db_username = "projectUser";
             $db_password = "pj1234";
             $dbname = "project";
-            
-            // 创建数据库连接
             $conn = new mysqli($servername, $db_username, $db_password, $dbname, $port);
-            
-            // 检查连接
-            if ($conn->connect_error) {
-                $error_message = "数据库连接失败: " . $conn->connect_error;
-            } else {
-                // 检查用户名和邮箱是否匹配
                 $sql = "SELECT * FROM account WHERE username = ? AND email = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ss", $username, $email);
@@ -46,64 +31,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = $stmt->get_result();
                 
                 if ($result->num_rows > 0) {
-                    // 生成随机密码
-                    $new_password = bin2hex(random_bytes(8)); // 16位随机密码
-                    
-                    // 更新数据库中的密码
+                    $new_password = bin2hex(random_bytes(8));
                     $update_sql = "UPDATE account SET password = ? WHERE username = ? AND email = ?";
                     $update_stmt = $conn->prepare($update_sql);
                     $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                    $update_stmt->bind_param("sss", $hashed_password, $username, $email);
-                    
+                    $update_stmt->bind_param("sss", $hashed_password, $username, $email);                 
                     if ($update_stmt->execute()) {
-                        // 使用PHPMailer发送邮件
                         $mail = new PHPMailer(true);
-                        
                         try {
-                            // 服务器设置
                             $mail->isSMTP();
                             $mail->Host = 'ljymail.pp.ua';
                             $mail->SMTPAuth = true;
                             $mail->Username = 'DBMSPjResetPSWD@ljymail.pp.ua';
                             $mail->Password = 'test123';
-                            $mail->SMTPSecure = ''; // 不使用SSL/TLS
+                            $mail->SMTPSecure = '';
                             $mail->Port = 25;
                             $mail->CharSet = 'UTF-8';
-                            // 收件人设置
-                            $mail->setFrom('DBMSPjResetPSWD@ljymail.pp.ua', '密码重置系统');
+                            $mail->setFrom('DBMSPjResetPSWD@ljymail.pp.ua', 'Reset Password');
                             $mail->addAddress($email, $username);
-                            
-                            // 邮件内容
                             $mail->isHTML(true);
-                            $mail->Subject = '密码重置通知';
+                            $mail->Subject = 'Notification of Password Reset';
                             $mail->Body    = "
-                                <h2>密码重置成功</h2>
-                                <p>尊敬的 <strong>{$username}</strong>，</p>
-                                <p>您的密码已被重置为：<strong>{$new_password}</strong></p>
-                                <p>请尽快使用新密码登录系统，并修改为您自己的密码。</p>
-                                <p>如果您没有请求重置密码，请立即联系管理员。</p>
+                                <h2>Reset Password Success!</h2>
+                                <p>Dear <strong>{$username}</strong>,</p>
+                                <p>Your password has been reset to: <strong>{$new_password}</strong></p>
+                                <p>Please login to your account and change your password immediately.</p>
+                                <p>Thank you for using our services!</p>
                                 <br>
-                                <p>此致，<br>SodaCANdy.Group 团队</p>
+                                <p>Best regards, <br>Fresh Food Team</p>
                             ";
-                            $mail->AltBody = "您的密码已被重置为: {$new_password}。请尽快登录并修改密码。";
-                            
                             $mail->send();
-                            $success_message = "密码重置成功！新密码已发送到您的邮箱。";
+                            $success_message = "Password reset success! Please check your email for the new password.";
                         } catch (Exception $e) {
-                            $error_message = "邮件发送失败: " . $mail->ErrorInfo;
+                            $error_message = "Mail could not be sent: " . $mail->ErrorInfo;
                         }
                     } else {
-                        $error_message = "密码重置失败，请稍后重试。";
+                        $error_message = "Password reset failed!";
                     }
                     
                     $update_stmt->close();
                 } else {
-                    $error_message = "用户名和邮箱不匹配或用户不存在！";
+                    $error_message = "Username or email not found.";
                 }
                 
                 $stmt->close();
                 $conn->close();
-            }
+            
         }
     }
 }
@@ -112,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>重置密码 - SodaCANdy.Group</title>
+    <title>Reset Password</title>
     <style>
         * {
             margin: 0;
@@ -285,8 +258,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <div class="header">
-            <h1>重置密码</h1>
-            <p>请输入您的用户名和邮箱地址来重置密码</p>
+            <h1>Reset Password</h1>
+            <p>Please enter your username and email address to reset your password.</p>
         </div>
         
         <div class="form-container">
@@ -299,44 +272,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
             
             <div class="info-box">
-                <p><strong>提示：</strong>请确保输入的用户名和邮箱地址与您注册时使用的信息完全一致。</p>
+                <p><strong>Notification: </strong>Please check your email carefully.</p>
             </div>
             
             <form method="post" action="">
                 <div class="input-group">
-                    <label for="username">用户名</label>
-                    <input type="text" id="username" name="username" placeholder="请输入您的用户名" 
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" 
                            value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="email">邮箱地址</label>
-                    <input type="email" id="email" name="email" placeholder="请输入您的邮箱地址" 
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" 
                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
                 </div>
                 
-                <button type="submit" class="submit-btn">重置密码</button>
+                <button type="submit" class="submit-btn">Reset Password</button>
             </form>
         </div>
         
         <div class="footer">
-            <p>Copyright &copy; 2025 <a href="https://tlljyang.github.io">SodaCANdy.Group</a> in UIC. All rights reserved.</p>
+            <p><spam>Copyright &copy; 2025 </spam>
+                            <spam><a href="http://tlljyang.pp.ua" style="color: yellow;">SodaCANdy.Group</a></spam> in
+                            UIC. All rights reserved.</p>
         </div>
     </div>
 
     <script>
-        // 添加一些简单的表单验证
         document.querySelector('form').addEventListener('submit', function(e) {
             const username = document.getElementById('username').value.trim();
             const email = document.getElementById('email').value.trim();
             
             if (!username || !email) {
                 e.preventDefault();
-                alert('请填写所有必填字段！');
+                alert('Please enter your username and email address!');
                 return;
             }
-            
-            // 简单的邮箱格式验证
+
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 e.preventDefault();
@@ -344,8 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 return;
             }
         });
-        
-        // 如果有错误或成功消息，3秒后自动隐藏
+
         setTimeout(function() {
             const messages = document.querySelectorAll('.message');
             messages.forEach(function(message) {
