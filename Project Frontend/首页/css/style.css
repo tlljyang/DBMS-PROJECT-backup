@@ -1543,8 +1543,62 @@ textarea{
 .agileinfo_social_icons li a{
 	color:#fff;
 }
+.like-dislike-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.like-dislike-buttons li {
+    list-style: none;
+    margin: 0 10px;
+}
+
+.like-btn, .dislike-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.like-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dislike-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.like-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.dislike-btn:hover {
+    background-color: #da190b;
+    transform: scale(1.05);
+}
+
+.like-btn .count, .dislike-btn .count {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.like-btn.active {
+    background-color: #2E7D32;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.dislike-btn.active {
+    background-color: #C62828;
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
 .agileinfo_social_icons li a i{
-	line-height:2.3em;
+	line-height:1.1em;
 }
 .w3_agileits_facebook{
 	background: #3b5998;
@@ -1581,19 +1635,19 @@ textarea{
 	display: none;
 	text-decoration: none;
 	position: fixed;
-	bottom: 20px;
+	bottom: 60px;
 	right: 2%;
 	overflow: hidden;
 	z-index: 999; 
-	width: 40px;
-	height: 40px;
+	width: 80px;
+	height: 80px;
 	border: none;
 	text-indent: 100%;
-	background: url(../images/arrow.png) no-repeat 0px 0px;
+	background: url(../images/arrow2.png) no-repeat 0px 0px;
 }
 #toTopHover {
-	width: 40px;
-	height: 40px;
+	width: 80px;
+	height: 80px;
 	display: block;
 	overflow: hidden;
 	float: right;
