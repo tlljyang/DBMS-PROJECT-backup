@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $mail->Password = 'test123';
                             $mail->SMTPSecure = ''; // 不使用SSL/TLS
                             $mail->Port = 25;
-                            
+                            $mail->CharSet = 'UTF-8';
                             // 收件人设置
                             $mail->setFrom('DBMSPjResetPSWD@ljymail.pp.ua', '密码重置系统');
                             $mail->addAddress($email, $username);
