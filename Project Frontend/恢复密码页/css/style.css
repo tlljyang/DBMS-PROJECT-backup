@@ -150,8 +150,8 @@ a:hover {
     border-left: 4px solid #4a00e0;
     padding: 15px;
     border-radius: 4px;
-    font-size: 24px;
-    color: #555;
+    font-size: 14px;
+    color: red;
 }
 
 /*--element end here--*/

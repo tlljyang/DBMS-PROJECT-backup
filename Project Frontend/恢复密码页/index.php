@@ -114,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="info-box">
             <p>Notification: Please check your email carefully.</p>
         </div>
+        <br><br>
         
         <form method="post" action="">
             <input type="text" name="username" placeholder="Your username" 
