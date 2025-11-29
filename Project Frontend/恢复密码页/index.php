@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <meta name="keywords" content="Reset Password Form Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <!--google fonts-->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.loli.net/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <!--element start here-->
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         
         <div class="info-box">
-            <p><strong>Notification: </strong>Please check your email carefully.</p>
+            <p><b>Notification:</b> Please check your email carefully.</p>
         </div>
         
         <form method="post" action="">
@@ -130,8 +130,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <div class="copy-right">
-    <p>© 2016 Reset Password Form. All rights reserved | 
-       <a target="_blank" href="http://tlljyang.pp.ua">SodaCANdy.Group</a>
+    <p>
+        <spam>Copyright &copy; 2025 </spam>
+        <spam><a href="http://tlljyang.pp.ua">SodaCANdy.Group</a></spam> in UIC. All rights reserved.
     </p>
 </div>
 
