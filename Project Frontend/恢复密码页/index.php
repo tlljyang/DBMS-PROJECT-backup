@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password Form  Responsive Widget Template | Home</title>
+    <title>Reset Password</title>
     <link href="./css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <!--element start here-->
 <div class="elelment">
-    <h2>Reset Password Form</h2>
+    <h2>Reset Password</h2>
     <div class="element-main">
         <h1>Forgot Password</h1>
         <p>Please enter your username and email address to reset your password.</p>
