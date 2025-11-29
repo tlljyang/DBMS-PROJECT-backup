@@ -1,5 +1,4 @@
 <?php
-// 数据库配置信息
 $servername = "alist.tlljyang.pp.ua";
 $port = 16599;
 $db_username = "projectUser";
@@ -7,15 +6,12 @@ $db_password = "pj1234";
 $dbname = "project";
 
 try {
-    // 创建数据库连接
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $db_username, $db_password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // 查询feedback表数据
     $stmt = $conn->query("SELECT * FROM feedback ORDER BY date DESC");
     $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
-    die("数据库连接失败: " . $e->getMessage());
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
 
@@ -24,7 +20,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户评价预览</title>
+    <title>Feedback (Only For Manager)</title>
     <style>
         body { font-family: 'Microsoft YaHei', sans-serif; margin: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -37,18 +33,18 @@ try {
     </style>
 </head>
 <body>
-    <h1>用户评价预览</h1>
+    <h1>Feedback Preview</h1>
     
     <?php if (count($feedbacks) > 0): ?>
         <table>
             <thead>
                 <tr>
-                    <th>评价ID</th>
-                    <th>客户ID</th>
-                    <th>订单ID</th>
-                    <th>评分</th>
-                    <th>评论内容</th>
-                    <th>评价日期</th>
+                    <th>Feedback ID</th>
+                    <th>Customer ID</th>
+                    <th>Order ID</th>
+                    <th>Rating</th>
+                    <th>Comments</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +61,7 @@ try {
             </tbody>
         </table>
     <?php else: ?>
-        <p>暂无评价数据</p>
+        <p>No feedback found.</p>
     <?php endif; ?>
 </body>
 </html>
