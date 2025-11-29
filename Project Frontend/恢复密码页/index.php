@@ -85,249 +85,86 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 450px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .header {
-            background: #4a00e0;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .header p {
-            opacity: 0.8;
-            font-size: 14px;
-        }
-        
-        .form-container {
-            padding: 30px;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s;
-        }
-        
-        .input-group input:focus {
-            border-color: #4a00e0;
-            box-shadow: 0 0 0 2px rgba(74, 0, 224, 0.2);
-            outline: none;
-        }
-        
-        .submit-btn {
-            background: linear-gradient(to right, #4a00e0, #8e2de2);
-            color: white;
-            border: none;
-            padding: 14px;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 0, 224, 0.4);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
-            font-size: 13px;
-        }
-        
-        .footer a {
-            color: #4a00e0;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .info-box {
-            background: #f0f8ff;
-            border-left: 4px solid #4a00e0;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #555;
-        }
-        
-        .info-box p {
-            margin-bottom: 5px;
-        }
-        
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        .error {
-            background-color: #ffebee;
-            color: #c62828;
-            border-left: 4px solid #f44336;
-        }
-        
-        .success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border-left: 4px solid #4caf50;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                border-radius: 10px;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-        }
-    </style>
+    <title>Reset Password Form  Responsive Widget Template | Home</title>
+    <link href="style.css" rel="stylesheet" type="text/css" media="all"/>
+    <!-- Custom Theme files -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="keywords" content="Reset Password Form Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <!--google fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Reset Password</h1>
-            <p>Please enter your username and email address to reset your password.</p>
+<!--element start here-->
+<div class="elelment">
+    <h2>Reset Password Form</h2>
+    <div class="element-main">
+        <h1>Forgot Password</h1>
+        <p>Please enter your username and email address to reset your password.</p>
+        
+        <?php if (!empty($error_message)): ?>
+            <div class="message error"><?php echo $error_message; ?></div>
+        <?php endif; ?>
+        
+        <?php if (!empty($success_message)): ?>
+            <div class="message success"><?php echo $success_message; ?></div>
+        <?php endif; ?>
+        
+        <div class="info-box">
+            <p><strong>Notification: </strong>Please check your email carefully.</p>
         </div>
         
-        <div class="form-container">
-            <?php if (!empty($error_message)): ?>
-                <div class="message error"><?php echo $error_message; ?></div>
-            <?php endif; ?>
+        <form method="post" action="">
+            <input type="text" name="username" placeholder="Your username" 
+                   value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : 'Your username'; ?>" 
+                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your username';}">
             
-            <?php if (!empty($success_message)): ?>
-                <div class="message success"><?php echo $success_message; ?></div>
-            <?php endif; ?>
+            <input type="email" name="email" placeholder="Your e-mail address" 
+                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : 'Your e-mail address'; ?>" 
+                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your e-mail address';}">
             
-            <div class="info-box">
-                <p><strong>Notification: </strong>Please check your email carefully.</p>
-            </div>
-            
-            <form method="post" action="">
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" 
-                           value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="email">Email address</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email address" 
-                           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
-                </div>
-                
-                <button type="submit" class="submit-btn">Reset Password</button>
-            </form>
-        </div>
-        
-        <div class="footer">
-            <p><spam>Copyright &copy; 2025 </spam>
-                            <spam><a href="http://tlljyang.pp.ua" style="color: red;">SodaCANdy.Group</a></spam> in
-                            UIC. All rights reserved.</p>
-        </div>
+            <input type="submit" value="Reset my Password">
+        </form>
     </div>
+</div>
 
-    <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const username = document.getElementById('username').value.trim();
-            const email = document.getElementById('email').value.trim();
-            
-            if (!username || !email) {
-                e.preventDefault();
-                alert('Please enter your username and email address!');
-                return;
-            }
+<div class="copy-right">
+    <p>© 2016 Reset Password Form. All rights reserved | 
+       <a target="_blank" href="http://tlljyang.pp.ua">SodaCANdy.Group</a>
+    </p>
+</div>
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                e.preventDefault();
-                alert('请输入有效的邮箱地址！');
-                return;
-            }
+<!--element end here-->
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const username = document.querySelector('input[name="username"]').value.trim();
+        const email = document.querySelector('input[name="email"]').value.trim();
+        
+        if (!username || username === 'Your username' || !email || email === 'Your e-mail address') {
+            e.preventDefault();
+            alert('Please enter your username and email address!');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            e.preventDefault();
+            alert('Please enter a valid email address!');
+            return;
+        }
+    });
+
+    setTimeout(function() {
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(function(message) {
+            message.style.opacity = '0';
+            message.style.transition = 'opacity 0.5s';
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, 500);
         });
-
-        setTimeout(function() {
-            const messages = document.querySelectorAll('.message');
-            messages.forEach(function(message) {
-                message.style.opacity = '0';
-                message.style.transition = 'opacity 0.5s';
-                setTimeout(function() {
-                    message.style.display = 'none';
-                }, 500);
-            });
-        }, 5000);
-    </script>
+    }, 5000);
+</script>
 </body>
 </html>

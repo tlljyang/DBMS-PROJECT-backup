@@ -71,7 +71,7 @@ a:hover {
     margin: 1.5em 0em;
     text-align:center;
 }
-.element-main input[type="text"] {
+.element-main input[type="text"], .element-main input[type="email"] {
     font-size: 1em;
     color: #A29E9E;
     padding: 1em 0.5em;
@@ -81,6 +81,7 @@ a:hover {
     margin-bottom: 1em;
     text-align:center;
     border: 1px solid #B9B9B9;
+    border-radius: 0;
 }
 .element-main input[type="submit"] {
     font-size: 1em;
@@ -125,6 +126,39 @@ a:hover {
   -moz-transition: 0.5s all;
   -o-transition: 0.5s all;
 }
+
+/* Message styles */
+.message {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #f44336;
+}
+
+.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.info-box {
+    background: #f0f8ff;
+    border-left: 4px solid #4a00e0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #555;
+}
+
+.info-box p {
+    margin-bottom: 5px;
+}
+
 /*--element end here--*/
 /*--media quiries start here--*/
 @media(max-width:1440px){
@@ -197,7 +231,7 @@ a:hover {
     font-size:0.9em;
     width: 75%;
 }
-.element-main input[type="text"] {
+.element-main input[type="text"], .element-main input[type="email"] {
     font-size: 0.9em;
     padding: 0.8em 0.5em;
 }
