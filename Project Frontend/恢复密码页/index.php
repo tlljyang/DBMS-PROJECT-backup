@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         
         <div class="info-box">
-            <p><b>Notification:</b> Please check your email carefully.</p>
+            <p>Notification: Please check your email carefully.</p>
         </div>
         
         <form method="post" action="">
