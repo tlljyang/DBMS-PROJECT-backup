@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_config.php';
+include '../ConnectDB.php';
 
 header("Refresh: 10");
 
