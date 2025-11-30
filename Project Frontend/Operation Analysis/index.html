@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Revenue & Operation</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#" style="color: orange;">Operation Analysis</a>
+            <a href="#">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <h1 class="page-title">Operation Analysis Dashboard</h1>
+
+        <!-- Core Statistics Cards -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="card-title">Total Revenue Today</div>
+                <div class="card-value">8,560<span class="card-unit"> CNY</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="card-title">Total Orders Today</div>
+                <div class="card-value">128<span class="card-unit"> orders</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="card-title">Total Customers Today</div>
+                <div class="card-value">96<span class="card-unit"> people</span></div>
+            </div>
+        </div>
+
+        <!-- Charts Area -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-title">Revenue Trend in Last 7 Days (CNY)</div>
+                <div class="bar-chart">
+                    <div class="bar" data-value="5200">
+                        <div class="bar-label">Monday</div>
+                        <div class="bar-value">5,200</div>
+                    </div>
+                    <div class="bar" data-value="6800">
+                        <div class="bar-label">Tuesday</div>
+                        <div class="bar-value">6,800</div>
+                    </div>
+                    <div class="bar" data-value="6300">
+                        <div class="bar-label">Wednesday</div>
+                        <div class="bar-value">6,300</div>
+                    </div>
+                    <div class="bar" data-value="7900">
+                        <div class="bar-label">Thursday</div>
+                        <div class="bar-value">7,900</div>
+                    </div>
+                    <div class="bar" data-value="8200">
+                        <div class="bar-label">Friday</div>
+                        <div class="bar-value">8,200</div>
+                    </div>
+                    <div class="bar" data-value="9500">
+                        <div class="bar-label">Saturday</div>
+                        <div class="bar-value">9,500</div>
+                    </div>
+                    <div class="bar" data-value="8560">
+                        <div class="bar-label">Sunday</div>
+                        <div class="bar-value">8,560</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Feedback Rating Pie Chart -->
+            <div class="chart-card">
+                <div class="chart-title">Customer Feedback Rating Distribution</div>
+                <div class="pie-chart"></div>
+                <div class="pie-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: green;"></div>
+                        <div class="legend-text">5 Stars (25%)</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: orange;"></div>
+                        <div class="legend-text">4 Stars (30%)</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: lightskyblue;"></div>
+                        <div class="legend-text">3 Stars (20%)</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: red;"></div>
+                        <div class="legend-text">2 Stars (15%)</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: purple;"></div>
+                        <div class="legend-text">1 Star (10%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bars = document.querySelectorAll('.bar');
+        const values = Array.from(bars).map(bar => Number(bar.dataset.value));
+        const maxValue = Math.max(...values);
+        const barChart = document.querySelector('.bar-chart');
+        const chartTotalHeight = parseInt(getComputedStyle(barChart).height);
+
+        bars.forEach(bar => {
+            const currentValue = Number(bar.dataset.value);
+            const barHeight = (currentValue / maxValue) * chartTotalHeight;
+            bar.style.height = `${barHeight}px`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #2c3e50;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: orange;
+}
+
+/* Main Content Container */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    border-bottom: 2px solid orange;
+    padding-bottom: 0.5rem;
+}
+
+/* Core Statistics Cards */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-card .card-title {
+    font-size: 1rem;
+    color: grey;
+    margin-bottom: 1rem;
+}
+
+.stat-card .card-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.stat-card .card-unit {
+    font-size: 1rem;
+    color: grey;
+    margin-left: 0.5rem;
+}
+
+/* Charts Area */
+.charts-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chart-title {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* bar chart */
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    height: 300px; 
+    padding: 0 1rem;
+    gap: 1rem;
+    position: relative;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-left: 1rem;
+    padding-bottom: 30px;
+}
+
+.bar {
+    flex: 1;
+    background-color: #3498db;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 0.5s ease;
+}
+
+.bar:hover {
+    background-color: orange;
+}
+
+.bar .bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.bar .bar-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* pie chart */
+.pie-chart {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background: conic-gradient(
+        green 0% 25%,
+        orange 25% 55%,
+        lightskyblue 55% 75%,
+        red 75% 90%,
+        purple 90% 100%
+    );
+    position: relative;
+}
+
+.pie-legend {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.legend-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+@media (max-width: 992px) {
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+    .navbar .nav-links {
+        display: none;
+    }
+    .bar-chart {
+        height: 200px;
+    }
+}
