@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management System</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        body { background-color: #ffffff; padding: 20px; color: #333; }
+        header { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        h1 { color: #1f2937; font-size: 24px; margin-bottom: 5px; }
+        .subtitle { color: #6b7280; font-size: 16px; }
+        .container { display: flex; gap: 30px; max-width: 1200px; }
+        .card { border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; background-color: #fff; }
+        h2 { font-size: 18px; margin-bottom: 20px; color: #111; font-weight: 700; }
+        .left-panel { flex: 0 0 350px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #374151; font-size: 14px; }
+        input[type="date"], textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 14px; color: #333; }
+        textarea { height: 100px; resize: vertical; }
+        .btn-submit { width: 100%; background-color: #2563eb; color: white; border: none; padding: 12px; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-submit:hover { background-color: #1d4ed8; }
+        .right-panel { flex: 1; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background-color: #f3f4f6; }
+        th { text-align: left; padding: 12px; font-size: 14px; color: #374151; font-weight: 700; }
+        td { padding: 15px 12px; border-bottom: 1px solid #e5e7eb; font-size: 14px; vertical-align: top; color: #1f2937; }
+        .status-badge { padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; display: inline-block; }
+        .status-pending { background-color: #fef9c3; color: #854d0e; }
+        .status-approved { background-color: #dcfce7; color: #166534; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        @media (max-width: 768px) { .container { flex-direction: column; } .left-panel, .right-panel { width: 100%; flex: auto; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Leave Management System</h1>
+        <p class="subtitle">Employee: Sabrina Cooper (chef) </p>
+    </header>
+
+    <div class="container">
+        <div class="card left-panel">
+            <h2>1. Request Leave</h2>
+            <form id="leaveForm">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" id="startDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="date" id="endDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="reason" placeholder="Why are you taking leave?" required></textarea>
+                </div>
+
+                <button type="button" class="btn-submit" onclick="addLeave()">Submit Request</button>
+            </form>
+        </div>
+
+        <div class="card right-panel">
+            <h2>2. Leave Preview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th style="width: 40%;">Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td>2025-11-30</td>
+                        <td>2025-12-04</td>
+                        <td>uncomfortab</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-15</td>
+                        <td>2023-11-16</td>
+                        <td>Personal errands and family commitment</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function addLeave() {
+            var start = document.getElementById("startDate").value;
+            var end = document.getElementById("endDate").value;
+            var reason = document.getElementById("reason").value;
+
+            if (start === "" || end === "" || reason === "") {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            var table = document.getElementById("tableBody");
+
+            var newRow = table.insertRow(0);
+
+            newRow.innerHTML = `
+                <td>${start}</td>
+                <td>${end}</td>
+                <td>${reason}</td>
+                <td><span class="status-badge status-pending">Pending</span></td>
+            `;
+
+            document.getElementById("leaveForm").reset();
+        }
+    </script>
+
+</body>
+</html>
