@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    text-align: center;
+    opacity: 0.9;
+}
+
+.filters {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.status-filters {
+    display: flex;
+    gap: 1rem;
+}
+
+.status-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.status-btn.active {
+    background: #2575fc;
+    color: white;
+}
+
+.status-btn:hover:not(.active) {
+    background: #f0f0f0;
+}
+
+.pagination-info {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.order-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.order-card.pending {
+    border-left-color: #ff9f43;
+}
+
+.order-card.confirmed {
+    border-left-color: #2e86de;
+}
+
+.order-card.cooking {
+    border-left-color: #ee5a24;
+}
+
+.order-card.completed {
+    border-left-color: #10ac84;
+}
+
+.order-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.order-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: #fff9e6;
+    color: #f39c12;
+}
+
+.status-confirmed {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-cooking {
+    background: #ffecb3;
+    color: #ff8f00;
+}
+
+.status-completed {
+    background: #e8f5e9;
+    color: #388e3c;
+}
+
+.order-content {
+    padding: 1.5rem;
+}
+
+.dish-info {
+    margin-bottom: 1rem;
+}
+
+.dish-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #2d3436;
+}
+
+.dish-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed #f0f0f0;
+}
+
+.method-section {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
+.method-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #6a11cb;
+}
+
+.ingredients-list {
+    background: #fff9e6;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #ffd32a;
+}
+
+.ingredient-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 0;
+}
+
+.order-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.complete-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #00b894, #00a085);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.complete-btn:hover {
+    background: linear-gradient(135deg, #00a085, #008f76);
+    transform: scale(1.02);
+}
+
+.complete-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.timestamp {
+    font-size: 0.9rem;
+    color: #636e72;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 0.5rem;
+}
+
+.pagination a,
+.pagination span {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #2575fc;
+    transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+    background: #2575fc;
+    color: white;
+    border-color: #2575fc;
+}
+
+.pagination .current {
+    background: #2575fc;
+    color: white;
+    border-color: #2575fc;
+}
+
+.pagination .disabled {
+    color: #bdc3c7;
+    pointer-events: none;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 3rem;
+    color: #636e72;
+    font-size: 1.2rem;
+    grid-column: 1 / -1;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    z-index: 1000;
+    max-width: 350px;
+    transform: translateX(400px);
+    transition: transform 0.5s ease;
+    border-left: 5px solid;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left-color: #00b894;
+}
+
+.notification.error {
+    border-left-color: #ff6b6b;
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.notification-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.notification-message {
+    color: #666;
+}
+
+.notification-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .status-filters {
+        flex-wrap: wrap;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+}
