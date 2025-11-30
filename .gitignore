@@ -23,3 +23,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+.DS_Store
+**/.DS_Store
+Project Frontend/.DS_Store
+Project Frontend/登录注册页-顾客/.DS_Store
